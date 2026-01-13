@@ -103,8 +103,38 @@ socket.on('chat_message', (data) => {
 
 socket.on('server_info', (info) => {
     if (info) {
+        // Update Header
         if (info.name) serverNameSpan.textContent = info.name;
         if (info.map) mapNameSpan.textContent = info.map;
+
+        // Update Info Tab
+        document.getElementById('info-name').textContent = info.name || '-';
+        document.getElementById('info-map').textContent = info.map || '-';
+
+        const playersCount = info.players !== undefined ? `${info.players}/${info.max_players}` : '-';
+        const botsCount = info.bots !== undefined ? ` (Боты: ${info.bots})` : '';
+        document.getElementById('info-players').textContent = playersCount + botsCount;
+
+        // VAC
+        const vacEl = document.getElementById('info-secure');
+        vacEl.textContent = info.secure ? "Защищен (VAC)" : "Не защищен";
+        vacEl.style.color = info.secure ? "#00cc00" : "#ff4444";
+
+        // OS
+        const osMap = { 'l': 'Linux', 'w': 'Windows', 'm': 'Mac', 'o': 'Mac' };
+        document.getElementById('info-os').textContent = osMap[info.environment] || info.environment || '-';
+
+        // Password
+        const passEl = document.getElementById('info-password');
+        passEl.textContent = info.password ? "Да (Приватный)" : "Нет (Публичный)";
+        passEl.style.color = info.password ? "#ffac30" : "#00cc00";
+
+        // Type
+        const typeMap = { 'd': 'Dedicated', 'l': 'Listen', 'p': 'Proxy' };
+        document.getElementById('info-type').textContent = typeMap[info.server_type] || info.server_type || '-';
+
+        document.getElementById('info-version').textContent = info.version || '-';
+        document.getElementById('info-tags').textContent = info.tags || '-';
     }
 });
 

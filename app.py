@@ -40,8 +40,9 @@ async def join_game(sid, data):
     server_ip = data.get('server_ip', '127.0.0.1:27015')
     
     if ':' in server_ip:
-        host, port = server_ip.split(':')
-        port = int(port)
+        host, port_str = server_ip.split(':')
+        # Clean port string (remove potential invisible chars)
+        port = int(''.join(filter(str.isdigit, port_str)))
     else:
         host = server_ip
         port = 27015
@@ -78,7 +79,7 @@ async def join_game(sid, data):
                 if data:
                     # Send basic info (Name, Map)
                     if 'name' in data:
-                         await sio.emit('server_info', {'name': data['name'], 'map': data.get('map', '')}, room=target_sid)
+                        await sio.emit('server_info', data, room=target_sid)
 
                     if 'players_list' in data:
                         players = data['players_list']

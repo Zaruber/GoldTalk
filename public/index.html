@@ -52,12 +52,54 @@
 
                 <div class="chat-tabs">
                     <button class="tab-btn active" data-tab="console-output">Чат</button>
+                    <button class="tab-btn" data-tab="server-info-tab">Инфо</button>
                     <button class="tab-btn" data-tab="server-logs">Логи Сервера</button>
                 </div>
 
                 <div id="console-output" class="console-output chat-content">
                     <div class="console-line system">Counter-Strike 1.6 Chat Engine v1.0</div>
                     <div class="console-line system">Protocol version 48</div>
+                </div>
+
+                <div id="server-info-tab" class="console-output chat-content hidden" style="padding: 15px;">
+                    <table style="width: 100%; border-collapse: collapse; color: #ddd;">
+                        <tr>
+                            <td style="width: 120px; color: #aaa;">Сервер:</td>
+                            <td id="info-name">-</td>
+                        </tr>
+                        <tr>
+                            <td style="color: #aaa;">Карта:</td>
+                            <td id="info-map">-</td>
+                        </tr>
+                        <tr>
+                            <td style="color: #aaa;">Игроки:</td>
+                            <td id="info-players">-</td>
+                        </tr>
+                        <tr>
+                            <td style="padding-top: 10px; color: #aaa;">VAC:</td>
+                            <td id="info-secure" style="padding-top: 10px;">-</td>
+                        </tr>
+                        <tr>
+                            <td style="color: #aaa;">OS:</td>
+                            <td id="info-os">-</td>
+                        </tr>
+                        <tr>
+                            <td style="color: #aaa;">Приватность:</td>
+                            <td id="info-password">-</td>
+                        </tr>
+                        <tr>
+                            <td style="color: #aaa;">Тип:</td>
+                            <td id="info-type">-</td>
+                        </tr>
+                        <tr>
+                            <td style="color: #aaa;">Версия:</td>
+                            <td id="info-version">-</td>
+                        </tr>
+                        <tr>
+                            <td style="color: #aaa;">Теги:</td>
+                            <td id="info-tags" style="font-style: italic; color: #888;">-</td>
+                        </tr>
+                    </table>
                 </div>
 
                 <div id="server-logs" class="console-output chat-content hidden">

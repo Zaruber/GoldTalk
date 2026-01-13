@@ -129,11 +129,50 @@ class CS16ServerParser:
             offset += 1
             
             bots = response[offset]
+            offset += 1
+
+            # Extended Info
+            server_type = chr(response[offset]) if offset < len(response) else '?'
+            offset += 1
+
+            environment = chr(response[offset]) if offset < len(response) else '?'
+            offset += 1
+
+            visibility = response[offset] if offset < len(response) else 0
+            offset += 1
+
+            vac = response[offset] if offset < len(response) else 0
+            offset += 1
+
+            version, offset = read_string(response, offset)
+
+            # Extra Data Flag (EDF)
+            edf = response[offset] if offset < len(response) else 0
+            offset += 1
+
+            keywords = ''
             
+            if edf & 0x80: # Port
+                offset += 2
+            
+            if edf & 0x10: # SteamID
+                offset += 8
+            
+            if edf & 0x40: # SourceTV
+                offset += 2
+                _, offset = read_string(response, offset) # SourceTV Name
+
+            if edf & 0x20: # Keywords
+                keywords, offset = read_string(response, offset)
+
+            if edf & 0x01: # GameID
+                offset += 8
+
             server_info = {
                 'host': host,
                 'port': port,
                 'protocol': protocol,
+                'name': server_type, # Temporary placeholder to debug logic if needed, but keeping logical name is better
                 'name': server_name,
                 'map': map_name,
                 'game_dir': game_dir,
@@ -143,7 +182,14 @@ class CS16ServerParser:
                 'max_players': max_players,
                 'bots': bots,
                 'free_slots': max(0, max_players - players),
-                'timestamp': datetime.now().isoformat()
+                'timestamp': datetime.now().isoformat(),
+                # New Fields
+                'server_type': server_type,
+                'environment': environment,
+                'secure': bool(vac),
+                'password': bool(visibility),
+                'version': version,
+                'tags': keywords
             }
             
             return server_info
