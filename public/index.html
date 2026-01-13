@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counter-Strike 1.6 Web Chat</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+</head>
+
+<body>
+
+    <div id="login-screen" class="cs-window">
+        <div class="cs-titlebar">Подключение к Серверу</div>
+        <div class="cs-content">
+            <div class="form-group">
+                <label>Ваш Никнейм:</label>
+                <input type="text" id="nickname-input" class="cs-input" placeholder="Введите ник" value="Player">
+            </div>
+            <div class="form-group">
+                <label>Адрес Сервера:</label>
+                <input type="text" id="server-input" class="cs-input" value="127.0.0.1:27015">
+            </div>
+            <div class="cs-buttons">
+                <button id="connect-btn" class="cs-button">Подключиться</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="chat-screen" class="hidden">
+        <div class="main-container">
+            <div class="sidebar">
+                <div class="cs-panel-title">Игроки</div>
+                <ul id="user-list">
+                    <!-- Users go here -->
+                </ul>
+                <div class="voice-controls">
+                    <button id="voice-btn" class="cs-button">Включить Голос</button>
+                    <div id="voice-status">Голос: ВЫКЛ</div>
+                </div>
+            </div>
+            <div class="chat-area">
+                <div class="server-header">
+                    <span id="current-server-name">Не подключен</span>
+                    <span id="current-map-name" style="font-size: 0.8em; color: #aaa; margin-left: 10px;"></span>
+                </div>
+
+                <div class="chat-tabs">
+                    <button class="tab-btn active" data-tab="console-output">Чат</button>
+                    <button class="tab-btn" data-tab="server-logs">Логи Сервера</button>
+                </div>
+
+                <div id="console-output" class="console-output chat-content">
+                    <div class="console-line system">Counter-Strike 1.6 Chat Engine v1.0</div>
+                    <div class="console-line system">Protocol version 48</div>
+                </div>
+
+                <div id="server-logs" class="console-output chat-content hidden">
+                    <div class="console-line system">Логи соединения...</div>
+                </div>
+
+                <div class="input-area">
+                    <span class="prompt">say: </span>
+                    <input type="text" id="message-input" class="cs-input-transparent" autocomplete="off"
+                        placeholder="Введите сообщение...">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="client.js"></script>
+</body>
+
+</html>
